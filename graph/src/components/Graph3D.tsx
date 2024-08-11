@@ -1,30 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import ForceGraph3D from '3d-force-graph';
-import * as THREE from 'three';
-
-interface NodeObject {
-    id: string;
-    [key: string]: any;
-  }
-
-  interface LinkObject {
-    source: string;
-    target: string;
-    [key: string]: any;
-  }
-
-  interface GraphData {
-    nodes: NodeObject[];
-    links: LinkObject[];
-  }
-
-  interface ForceGraphMethods {
-    graphData(data: GraphData): this;
-    nodeThreeObject(callback: (node: NodeObject) => THREE.Object3D): this;
-    linkWidth(callback: (link: LinkObject) => number): this;
-    onNodeClick(callback: (node: NodeObject) => void): this;
-    [key: string]: any; // 他のメソッドのためのプロパティ
-  }
+import SpriteText from 'three-spritetext';
 
 
   const Graph3D: React.FC = () => {
@@ -38,28 +14,43 @@ interface NodeObject {
         // グラフのデータ
         graph.current.graphData({
           nodes: [
-            { id: 'Node 1' },
-            { id: 'Node 2' },
-            { id: 'Node 3' }
+            { id: 'スポーツ施設' },
+            { id: 'サッカー' },
+            { id: '介護保険' },
+            { id: '人口' },
+            { id: '年齢' },
+            { id: '施設費用' },
+            { id: 'ボランティア' },
+            { id: '目黒区' },
+            { id: '介護施設' },
           ],
           links: [
-            { source: 'Node 1', target: 'Node 2' },
-            { source: 'Node 2', target: 'Node 3' }
+            { source: 'スポーツ施設', target: 'サッカー' },
+            { source: 'スポーツ施設', target: '年齢' },
+            { source: 'スポーツ施設', target: '施設費用' },
+            { source: 'スポーツ施設', target: '目黒区' },
+            { source: '年齢', target: '人口' },
+            { source: '介護保険', target: '施設費用' },
+            { source: '介護施設', target: '施設費用' },
+            { source: '施設費用', target: '目黒区' },
+            { source: 'サッカー', target: 'ボランティア' },
+            { source: 'ボランティア', target: '年齢' },
           ]
         });
 
 
         // リンクのカスタマイズ
         if (graph.current) {
-            graph.current.linkWidth((link: any) => link.value || 2);
+            graph.current.linkWidth((link: any) => link.value || 1.8);
             graph.current.linkColor(() => '#FFFFFF');
         }
 
-        // ノードのカスタマイズ
+        // ノードを文字列に設定
         graph.current.nodeThreeObject((node: any) => {
-          const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ color: node.color || 0x00ff00 }));
-          sprite.scale.set(8, 8, 8);
-          return sprite;
+          const text = new SpriteText(node.id);
+          text.color = '#00ff00'; 
+          text.textHeight = 6; 
+          return text;
         });
       }
 
