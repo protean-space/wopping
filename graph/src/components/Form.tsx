@@ -26,7 +26,19 @@ const TagForm: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "0 auto", padding: "20px" }}>
+    <div
+      style={{
+        maxWidth: "70vh",
+        margin: "0 auto",
+        padding: "10px 40px 10px 40px",
+        position: "fixed", // 固定
+        top: "2%", // 画面の上部に固定
+        left: "0", // 画面の左端に固定
+        right: "0", // 画面の右端に固定
+        backgroundColor: "#374654", // 背景色を白に設定（スクロール時の視認性向上のため）
+        zIndex: 1000, // 他の要素の上に表示
+      }}
+    >
       <h3>文献 - 単語検索</h3>
       <div style={{ display: "flex", alignItems: "center" }}>
         <TagInput

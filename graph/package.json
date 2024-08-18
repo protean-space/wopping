@@ -12,12 +12,15 @@
   "dependencies": {
     "@pathofdev/react-tag-input": "^1.0.7",
     "3d-force-graph": "^1.73.3",
+    "element-resize-detector": "^1.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "styled-components": "^6.1.12",
     "three": "^0.167.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@types/element-resize-detector": "^1.1.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
