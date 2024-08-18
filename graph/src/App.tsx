@@ -1,6 +1,6 @@
-import React from 'react';
-import Graph3D from './components/Graph3D';
-import TagForm from './components/Form';
+import React from "react";
+import Graph3D from "./components/Graph3D";
+import TagForm from "./components/Form";
 
 const App: React.FC = () => {
   return (
