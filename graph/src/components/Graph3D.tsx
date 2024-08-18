@@ -4,14 +4,14 @@ import SpriteText from "three-spritetext";
 
 const Graph3D: React.FC = () => {
   const graphRef = useRef<HTMLDivElement>(null);
-  const graph = useRef<any>(null); // `any`型を使用
 
   useEffect(() => {
     if (graphRef.current) {
-      graph.current = ForceGraph3D()(graphRef.current);
+      const Graph = ForceGraph3D();
+      const graph = Graph(graphRef.current);
 
       // グラフのデータ
-      graph.current.graphData({
+      graph.graphData({
         nodes: [
           { id: "スポーツ施設" },
           { id: "サッカー" },
@@ -38,26 +38,40 @@ const Graph3D: React.FC = () => {
       });
 
       // リンクのカスタマイズ
-      if (graph.current) {
-        graph.current.linkWidth((link: any) => link.value || 1.8);
-        graph.current.linkColor(() => "#FFFFFF");
-      }
+      graph.linkWidth((link: any) => link.value || 1.8);
+      graph.linkColor(() => "#FFFFFF");
 
       // ノードを文字列に設定
-      graph.current.nodeThreeObject((node: any) => {
+      graph.nodeThreeObject((node: any) => {
         const text = new SpriteText(node.id);
         text.color = "#00ff00";
         text.textHeight = 6;
         return text;
       });
+
+      // ウィンドウがリサイズされたとき用のリスナー
+      window.addEventListener("resize", () => {
+        graph.width(window.innerWidth);
+        graph.height(window.innerHeight);
+      });
+
+      // 初期サイズ設定
+      graph.width(window.innerWidth);
+      graph.height(window.innerHeight);
     }
 
     return () => {
-      graph.current = null;
+      window.removeEventListener("resize", () => {
+        if (graphRef.current) {
+          const graph = ForceGraph3D()(graphRef.current);
+          graph.width(window.innerWidth);
+          graph.height(window.innerHeight);
+        }
+      });
     };
   }, []);
 
-  return <div ref={graphRef} style={{ width: "100%", height: "100vh" }} />;
+  return <div ref={graphRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default Graph3D;
